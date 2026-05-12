@@ -1,0 +1,342 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: 23 23 23;
+  --color-primary-foreground: 255 255 255;
+  --color-background: 250 250 249;
+  --color-foreground: 23 23 23;
+  --color-muted: 245 245 245;
+  --color-muted-foreground: 115 115 115;
+  --color-border: 229 229 229;
+  --color-card: 255 255 255;
+  --color-card-foreground: 23 23 23;
+  --color-accent: 59 130 246;
+  --color-accent-foreground: 255 255 255;
+  --color-success: 34 197 94;
+  --color-warning: 245 158 11;
+  --color-danger: 239 68 68;
+}
+
+.dark {
+  --color-primary: 255 255 255;
+  --color-primary-foreground: 23 23 23;
+  --color-background: 18 18 18;
+  --color-foreground: 250 250 250;
+  --color-muted: 38 38 38;
+  --color-muted-foreground: 163 163 163;
+  --color-border: 64 64 64;
+  --color-card: 28 28 28;
+  --color-card-foreground: 250 250 250;
+  --color-accent: 96 165 250;
+  --color-accent-foreground: 23 23 23;
+  --color-success: 74 222 128;
+  --color-warning: 251 191 36;
+  --color-danger: 248 113 113;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-border));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-muted-foreground));
+}
+
+/* ===== 翻转卡片动画 ===== */
+.card-flip-container {
+  perspective: 1000px;
+}
+
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.card-flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* ===== 进度条 ===== */
+.progress-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: rgb(var(--color-border));
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgb(var(--color-accent)), rgb(var(--color-success)));
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== 按钮基础 ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  outline: none;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: rgb(var(--color-accent));
+  color: rgb(var(--color-accent-foreground));
+  border-color: transparent;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 12px rgba(var(--color-accent), 0.3);
+}
+
+.btn-secondary {
+  background: rgb(var(--color-muted));
+  color: rgb(var(--color-foreground));
+  border-color: rgb(var(--color-border));
+}
+
+.btn-secondary:hover {
+  background: rgb(var(--color-border));
+}
+
+.btn-success {
+  background: rgb(var(--color-success));
+  color: white;
+}
+
+.btn-success:hover {
+  opacity: 0.9;
+}
+
+.btn-danger {
+  background: rgb(var(--color-danger));
+  color: white;
+}
+
+.btn-danger:hover {
+  opacity: 0.9;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: rgb(var(--color-muted-foreground));
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  background: rgb(var(--color-muted));
+  color: rgb(var(--color-foreground));
+}
+
+/* ===== 输入框 ===== */
+.input-base {
+  background: rgb(var(--color-card));
+  border: 1px solid rgb(var(--color-border));
+  color: rgb(var(--color-foreground));
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-base:focus {
+  border-color: rgb(var(--color-accent));
+  box-shadow: 0 0 0 3px rgba(var(--color-accent), 0.1);
+}
+
+.input-base::placeholder {
+  color: rgb(var(--color-muted-foreground));
+}
+
+/* ===== 卡片样式 ===== */
+.surface {
+  background: rgb(var(--color-card));
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 16px;
+}
+
+.surface-hover:hover {
+  border-color: rgb(var(--color-accent));
+  box-shadow: 0 2px 8px rgba(var(--color-accent), 0.08);
+}
+
+/* ===== 标签页 ===== */
+.tab {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: rgb(var(--color-muted-foreground));
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.tab:hover {
+  color: rgb(var(--color-foreground));
+  background: rgb(var(--color-muted));
+}
+
+.tab.active {
+  color: rgb(var(--color-accent));
+  background: rgba(var(--color-accent), 0.08);
+}
+
+/* ===== 导入区域 ===== */
+.drop-zone {
+  border: 2px dashed rgb(var(--color-border));
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.drop-zone:hover,
+.drop-zone.dragging {
+  border-color: rgb(var(--color-accent));
+  background: rgba(var(--color-accent), 0.04);
+}
+
+/* ===== Toast 通知 ===== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1000;
+  animation: toast-in 0.3s ease forwards;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.toast.hiding {
+  animation: toast-out 0.3s ease forwards;
+}
+
+.toast-success {
+  background: rgb(var(--color-success));
+  color: white;
+}
+
+.toast-error {
+  background: rgb(var(--color-danger));
+  color: white;
+}
+
+.toast-info {
+  background: rgb(var(--color-accent));
+  color: white;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(16px); }
+}
+
+/* ===== 动画 ===== */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-in {
+  animation: slide-in-right 0.3s ease-out forwards;
+}
+
+@keyframes pulse-success {
+  0% { box-shadow: 0 0 0 0 rgba(var(--color-success), 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(var(--color-success), 0); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--color-success), 0); }
+}
+
+.pulse-success {
+  animation: pulse-success 0.6s ease;
+}

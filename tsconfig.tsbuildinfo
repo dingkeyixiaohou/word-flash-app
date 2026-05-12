@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/config.ts","./src/main.tsx","./src/types.ts","./src/components/flashcardview.tsx","./src/components/header.tsx","./src/components/importview.tsx","./src/components/roomentry.tsx","./src/components/toast.tsx","./src/components/wordlistview.tsx","./src/hooks/usetheme.ts"],"version":"5.9.3"}
