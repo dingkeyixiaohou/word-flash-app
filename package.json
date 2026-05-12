@@ -6,7 +6,8 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "tsx watch server/index.ts",
     "dev:client": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "build:cf": "vite build && cp -r api functions/api",
     "preview": "vite preview",
     "server": "tsx server/index.ts"
   },
