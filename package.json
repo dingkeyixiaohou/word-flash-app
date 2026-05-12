@@ -7,7 +7,7 @@
     "dev:server": "tsx watch server/index.ts",
     "dev:client": "vite",
     "build": "vite build",
-    "build:cf": "vite build && npx esbuild _worker.ts --bundle --platform=browser --target=es2020 --format=esm --outfile=dist/_worker.js",
+    "build:cf": "vite build && npx esbuild _worker.ts --bundle --platform=browser --target=es2022 --format=esm --outfile=dist/_worker.js",
     "preview": "vite preview",
     "server": "tsx server/index.ts"
   },

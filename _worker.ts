@@ -1,7 +1,7 @@
 // _worker.ts — Cloudflare Pages catch-all Worker
 // esbuild 打包后放到 dist/_worker.js
 
-import { createClient, Config } from '@libsql/client';
+import { createClient, type Config } from '@libsql/client/web';
 
 interface Env {
   TURSO_DATABASE_URL: string;
@@ -9,19 +9,13 @@ interface Env {
 }
 
 // ===== 数据库 =====
-let _db: any = null;
-
 function getDb(env: Env) {
-  if (!_db) {
-    const url = env.TURSO_DATABASE_URL || '';
-    const authToken = env.TURSO_AUTH_TOKEN || '';
-    if (!url) {
-      _db = createClient({ url: 'file:local.db' } as Config);
-    } else {
-      _db = createClient({ url, authToken } as Config);
-    }
+  const url = env.TURSO_DATABASE_URL || '';
+  const authToken = env.TURSO_AUTH_TOKEN || '';
+  if (!url) {
+    throw new Error('TURSO_DATABASE_URL is not configured');
   }
-  return _db;
+  return createClient({ url, authToken } as Config);
 }
 
 async function initDb(env: Env) {
@@ -39,15 +33,28 @@ async function initDb(env: Env) {
   await client.execute(`CREATE INDEX IF NOT EXISTS idx_words_room ON words(room_id)`);
 }
 
+function corsHeaders() {
+  return {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+}
+
 function json(data: any, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    headers: { 'Content-Type': 'application/json', ...corsHeaders() },
   });
 }
 
 // ===== 路由分发 =====
 async function handleRequest(request: Request, env: Env): Promise<Response> {
+  // CORS 预检请求
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: corsHeaders() });
+  }
+
   await initDb(env);
   const url = new URL(request.url);
   const path = url.pathname;
