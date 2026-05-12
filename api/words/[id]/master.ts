@@ -1,5 +1,5 @@
 import { jsonResponse, errorResponse } from '../_lib.js';
-import { markMastered, getStats, initDatabase } from '../../lib/db.js';
+import { markMastered, getStats, initDatabase } from '../../../lib/db.js';
 
 let initialized = false;
 async function ensureDb() {

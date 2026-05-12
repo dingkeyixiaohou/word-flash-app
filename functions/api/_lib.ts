@@ -15,7 +15,7 @@ export function getQuery(request: Request): Record<string, string> {
 }
 
 export async function getBody<T = any>(request: Request): Promise<T> {
-  return request.json();
+  return (await request.json()) as T;
 }
 
 export function jsonResponse(data: any, status = 200): Response {

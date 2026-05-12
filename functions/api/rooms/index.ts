@@ -10,7 +10,7 @@ async function ensureDb() {
 export async function POST(request: Request) {
   await ensureDb();
   try {
-    const body = await request.json();
+    const body: any = await request.json();
     const { id, name } = body;
     if (!id || !name) return errorResponse('缺少房间ID或昵称', 400);
 

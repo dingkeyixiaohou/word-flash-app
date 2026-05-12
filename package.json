@@ -7,7 +7,7 @@
     "dev:server": "tsx watch server/index.ts",
     "dev:client": "vite",
     "build": "vite build",
-    "build:cf": "vite build && cp -r api functions/api",
+    "build:cf": "vite build && tsc -p tsconfig.functions.json && node -e \"const fs=require('fs');fs.rmSync('dist/functions',{recursive:true,force:true});fs.cpSync('dist-functions/functions','dist/functions',{recursive:true});fs.rmSync('dist-functions',{recursive:true,force:true})\"",
     "preview": "vite preview",
     "server": "tsx server/index.ts"
   },

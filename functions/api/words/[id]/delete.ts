@@ -1,4 +1,4 @@
-import { jsonResponse, errorResponse } from '../_lib.js';
+import { jsonResponse, errorResponse } from '../../_lib.js';
 import { deleteWord, getStats, initDatabase } from '../../../lib/db.js';
 
 let initialized = false;
